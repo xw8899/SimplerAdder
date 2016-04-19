@@ -119,7 +119,7 @@ git log --graph --pretty=oneline --abbrev-commit
 
 ## 保存当前工作现场
 场景：当你接到一个修复一个代号101的bug的任务时，很自然地，你想创建一个分支issue-101来修复它，但是，等等，当前正在dev上进行的工作还没有提交；可以用git status查看状态
-并不是你不想提交，而是工作只进行到一半，还没法提交，预计完成还需1天时间。但是，必须在两个小时内修复该bug，怎么办？此时可以用Git提供的stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作。
+并不是你不想提交，而是工作只进行到一半，还没法提交，但是，必须马上修复该bug，怎么办？此时可以用Git提供的stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作。
 git stash: 保存当前工作现场
 git stash list: 查看工作现场
 git stash apply: 恢复工作现场
@@ -133,44 +133,29 @@ $ git stash apply stash@{0}
 ```
 
 ## 多人协作
--------------------
     工作模式：
-
     首先，可以试图用git push origin branch-name推送自己的修改；
     如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
     如果合并有冲突，则解决冲突，并在本地提交；
     没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
-
     如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
 
-
-    查看远程库信息
+## 查看远程库信息
     git remove: 
     git remote -v: 详细信息
-
     从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
-
     在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
-
     建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
-
     从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
 
 ## 标签管理
     命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
-
-    git tag -a <tagname> -m "blablabla..."可以指定标签信息；
-
-    git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
-
+    git tag -a <tagname> -m "some comment"可以指定标签信息；
+    git tag -s <tagname> -m "some comment"可以用PGP签名标签；
     命令git tag可以查看所有标签。
-
     命令git push origin <tagname>可以推送一个本地标签；
-
     命令git push origin --tags可以推送全部未推送过的本地标签；
-
     命令git tag -d <tagname>可以删除一个本地标签；
-
     命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
 
 ## 忽略特殊文件
@@ -180,7 +165,7 @@ $ git stash apply stash@{0}
 所有配置文件可以直接在线浏览：https://github.com/github/gitignore
 
 ## 配置别名
-
+```
 $ git config --global alias.st status
 $ git config --global alias.co checkout
 $ git config --global alias.ci commit
@@ -188,7 +173,7 @@ $ git config --global alias.br branch
 $ git config --global alias.unstage 'reset HEAD'
 $ git config --global alias.last 'log -1'
 $ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-
+```
 ## 配置文件
 
 配置Git的时候，加上--global是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。
